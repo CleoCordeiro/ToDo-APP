@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package br.com.cleo.todoapp.view;
 
 import br.com.cleo.todoapp.controller.ProjectController;
@@ -56,7 +52,7 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
     }
 
     /**
-     * This method set the fields of the form if custructor is from update
+     * This method set the fields of the form if construct from update
      */
     private void setFields() {
         jTextFieldProjectName.setText(project.getName());

@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.cleo.todoapp.util.table;
 
-import static br.com.cleo.todoapp.util.table.ChangeColorCell.ChangeColorCell;
+import static br.com.cleo.todoapp.util.table.ChangeColorCell.ChangeColor;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import javax.swing.AbstractCellEditor;
@@ -17,6 +13,7 @@ import javax.swing.table.TableCellRenderer;
 
 /**
  * Custom cell editor and renderer for the table.
+ * 
  * @author Cleo
  */
 public class ButtonEditorRenderer extends AbstractCellEditor
@@ -39,7 +36,6 @@ public class ButtonEditorRenderer extends AbstractCellEditor
 
     }
 
-
     /**
      * 
      * @param icon the icon to set to the button.
@@ -54,7 +50,7 @@ public class ButtonEditorRenderer extends AbstractCellEditor
 
         this.renderer.button.setIcon(new ImageIcon(getClass().getClassLoader().getResource(icon)));
 
-        ChangeColorCell(table, row, (Component) renderer, isSelected);
+        ChangeColor(table, row, (Component) renderer, isSelected);
         return renderer;
     }
 
@@ -62,7 +58,7 @@ public class ButtonEditorRenderer extends AbstractCellEditor
     public Component getTableCellEditorComponent(JTable table,
             Object value, boolean isSelected, int row, int column) {
         this.editor.button.setIcon(new ImageIcon(getClass().getClassLoader().getResource(icon)));
-        ChangeColorCell(table, row, (Component) renderer, isSelected);
+        ChangeColor(table, row, (Component) renderer, isSelected);
         return editor;
     }
 

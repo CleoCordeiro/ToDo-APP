@@ -1,21 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package br.com.cleo.todoapp.view;
 
-import br.com.cleo.todoapp.controller.ProjectController;
-import br.com.cleo.todoapp.controller.TaskController;
-import br.com.cleo.todoapp.model.Project;
-import br.com.cleo.todoapp.model.Task;
-import br.com.cleo.todoapp.util.Alarm;
-import br.com.cleo.todoapp.util.table.CheckBoxEditorRenderer;
 import static br.com.cleo.todoapp.util.CreateDB.createDB;
-import br.com.cleo.todoapp.util.table.DeadlineColumnCellRendere;
-import br.com.cleo.todoapp.util.table.DefaultTableCellRendere;
-import br.com.cleo.todoapp.util.table.FilterTasks;
-import br.com.cleo.todoapp.util.table.ButtonEditorRenderer;
-import br.com.cleo.todoapp.util.table.TaskTableModel;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -28,12 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -43,13 +25,46 @@ import javax.swing.Timer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import br.com.cleo.todoapp.controller.ProjectController;
+import br.com.cleo.todoapp.controller.TaskController;
+import br.com.cleo.todoapp.model.Project;
+import br.com.cleo.todoapp.model.Task;
+import br.com.cleo.todoapp.util.Alarm;
+import br.com.cleo.todoapp.util.table.ButtonEditorRenderer;
+import br.com.cleo.todoapp.util.table.CheckBoxEditorRenderer;
+import br.com.cleo.todoapp.util.table.DeadlineColumnCellRendere;
+import br.com.cleo.todoapp.util.table.DefaultTableCellRendere;
+import br.com.cleo.todoapp.util.table.FilterTasks;
+import br.com.cleo.todoapp.util.table.TaskTableModel;
+
 /**
  *
  * @author Cleo
  */
-public class MainScreem extends javax.swing.JFrame {
+public class MainScreen extends javax.swing.JFrame {
 
-    private Map<String, Callable<List<Task>>> commands = new HashMap<>();
+    private final class DefaultTableModelExtension extends javax.swing.table.DefaultTableModel {
+        Class[] types = new Class[] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class,
+                java.lang.Object.class, java.lang.Object.class
+        };
+        boolean[] canEdit = new boolean[] {
+                false, false, false, true, true, true
+        };
+
+        private DefaultTableModelExtension(Object[][] arg0, Object[] arg1) {
+            super(arg0, arg1);
+        }
+
+        public Class getColumnClass(int columnIndex) {
+            return types[columnIndex];
+        }
+
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return canEdit[columnIndex];
+        }
+    }
+
     private ProjectController projectController;
     private TaskController taskController;
     private Task task;
@@ -63,13 +78,13 @@ public class MainScreem extends javax.swing.JFrame {
     private Alarm alarm;
 
     /**
-     * Creates new form MainScreem
+     * Creates new form MainScreen
      */
-    public MainScreem() {
+    public MainScreen() {
         createDB();
         initComponents();
         this.setLocationRelativeTo(null);
-        initCustonComponnts();
+        initCustomComponents();
 
     }
 
@@ -322,32 +337,14 @@ public class MainScreem extends javax.swing.JFrame {
         jPanelTasksList.setLayout(new java.awt.BorderLayout());
 
         jTableTasks.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTableTasks.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null, null, null },
-                        { null, null, null, null, null, null },
-                        { null, null, null, null, null, null },
-                        { null, null, null, null, null, null }
-                },
-                new String[] {
-                        "Nome", "Descrição", "Prazo", "Tarefa Concluida", "Editar", "Excluir"
-                }) {
-            Class[] types = new Class[] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class,
-                    java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, true, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
+        jTableTasks.setModel(new DefaultTableModelExtension(new Object[][] {
+                { null, null, null, null, null, null },
+                { null, null, null, null, null, null },
+                { null, null, null, null, null, null },
+                { null, null, null, null, null, null }
+        }, new String[] {
+                "Nome", "Descrição", "Prazo", "Tarefa Concluída", "Editar", "Excluir"
+        }));
         jTableTasks.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTableTasks.setRowHeight(50);
         jTableTasks.setSelectionBackground(new java.awt.Color(153, 255, 153));
@@ -740,7 +737,7 @@ public class MainScreem extends javax.swing.JFrame {
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                 | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainScreem.class
+            java.util.logging.Logger.getLogger(MainScreen.class
                     .getName()).log(java.util.logging.Level.SEVERE, null,
                             ex);
         }
@@ -750,7 +747,7 @@ public class MainScreem extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new MainScreem().setVisible(true);
+            new MainScreen().setVisible(true);
         });
     }
 
@@ -791,7 +788,7 @@ public class MainScreem extends javax.swing.JFrame {
     /**
      * initialize custom components
      */
-    private void initCustonComponnts() {
+    private void initCustomComponents() {
         jRadioButtonAll.setActionCommand("ALL");
         jRadioButtonCompleted.setActionCommand("COMPLETED");
         jRadioButtonNotCompleted.setActionCommand("NOTCOMPLETED");
@@ -1050,7 +1047,7 @@ public class MainScreem extends javax.swing.JFrame {
     }
 
     /**
-     * Contineously update clock
+     * Continuously update clock
      */
     private void initUpdateClock() {
         clock();

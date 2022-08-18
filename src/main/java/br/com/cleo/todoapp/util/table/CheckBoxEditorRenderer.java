@@ -4,7 +4,7 @@
  */
 package br.com.cleo.todoapp.util.table;
 
-import static br.com.cleo.todoapp.util.table.ChangeColorCell.ChangeColorCell;
+import static br.com.cleo.todoapp.util.table.ChangeColorCell.ChangeColor;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import javax.swing.AbstractCellEditor;
@@ -36,19 +36,18 @@ public class CheckBoxEditorRenderer extends AbstractCellEditor
 
     }
 
-
     @Override
     public Component getTableCellRendererComponent(JTable table,
             Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         renderer.button.setSelected((boolean) value);
-        ChangeColorCell(table, row, (Component) renderer, isSelected);
+        ChangeColor(table, row, (Component) renderer, isSelected);
         return renderer;
     }
 
     @Override
     public Component getTableCellEditorComponent(JTable table,
             Object value, boolean isSelected, int row, int column) {
-        ChangeColorCell(table, row, (Component) renderer, isSelected);
+        ChangeColor(table, row, (Component) renderer, isSelected);
         editor.button.setSelected((boolean) value);
 
         return editor;

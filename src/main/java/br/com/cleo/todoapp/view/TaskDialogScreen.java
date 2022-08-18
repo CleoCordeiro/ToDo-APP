@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package br.com.cleo.todoapp.view;
 
 import br.com.cleo.todoapp.controller.TaskController;
@@ -424,14 +420,6 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         jPanel2.setBackground(new Color(255, 255, 255));
     }
 
-    private void jFormattedTextFieldDeadLineActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jFormattedTextFieldDeadLineActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jFormattedTextFieldDeadLineActionPerformed
-
-    // private void jLabelIcoMousePressed() {//
-    // GEN-FIRST:event_jLabelIcoMousePressed
-    //
-    // }
     /**
      * @param args the command line arguments
      */

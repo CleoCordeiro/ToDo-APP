@@ -4,7 +4,7 @@
  */
 package br.com.cleo.todoapp.util.table;
 
-import static br.com.cleo.todoapp.util.table.ChangeColorCell.ChangeColorCell;
+import static br.com.cleo.todoapp.util.table.ChangeColorCell.ChangeColor;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -22,7 +22,7 @@ public class DefaultTableCellRendere extends DefaultTableCellRenderer {
 
         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         label.setHorizontalAlignment(CENTER);
-        ChangeColorCell(table, row, this, isSelected);
+        ChangeColor(table, row, this, isSelected);
         return label;
     }
 }
