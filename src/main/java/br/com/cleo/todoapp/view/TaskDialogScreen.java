@@ -483,12 +483,10 @@ public class TaskDialogScreen extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
 
-    @SuppressWarnings("unused")
     public void setProject(Project project) {
         this.project = project;
     }
 
-    @SuppressWarnings("unused")
     public void setTask(Task task) {
         this.task = task;
     }

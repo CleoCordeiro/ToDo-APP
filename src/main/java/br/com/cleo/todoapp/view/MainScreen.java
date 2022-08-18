@@ -43,28 +43,6 @@ import br.com.cleo.todoapp.util.table.TaskTableModel;
  */
 public class MainScreen extends javax.swing.JFrame {
 
-    private final class DefaultTableModelExtension extends javax.swing.table.DefaultTableModel {
-        Class[] types = new Class[] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class,
-                java.lang.Object.class, java.lang.Object.class
-        };
-        boolean[] canEdit = new boolean[] {
-                false, false, false, true, true, true
-        };
-
-        private DefaultTableModelExtension(Object[][] arg0, Object[] arg1) {
-            super(arg0, arg1);
-        }
-
-        public Class getColumnClass(int columnIndex) {
-            return types[columnIndex];
-        }
-
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit[columnIndex];
-        }
-    }
-
     private ProjectController projectController;
     private TaskController taskController;
     private Task task;
@@ -337,14 +315,7 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelTasksList.setLayout(new java.awt.BorderLayout());
 
         jTableTasks.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTableTasks.setModel(new DefaultTableModelExtension(new Object[][] {
-                { null, null, null, null, null, null },
-                { null, null, null, null, null, null },
-                { null, null, null, null, null, null },
-                { null, null, null, null, null, null }
-        }, new String[] {
-                "Nome", "Descrição", "Prazo", "Tarefa Concluída", "Editar", "Excluir"
-        }));
+
         jTableTasks.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTableTasks.setRowHeight(50);
         jTableTasks.setSelectionBackground(new java.awt.Color(153, 255, 153));
@@ -353,15 +324,7 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.setShowHorizontalLines(true);
         jTableTasks.setShowVerticalLines(true);
         jTableTasks.getTableHeader().setReorderingAllowed(false);
-        jTableTasks.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTableTasksMousePressed(evt);
-            }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jTableTasksMouseReleased(evt);
-            }
-        });
         jScrollPaneTasks.setViewportView(jTableTasks);
 
         jPanelTasksList.add(jScrollPaneTasks, java.awt.BorderLayout.CENTER);
@@ -621,23 +584,6 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     /**
-     * Intercept the mouse click on the JTable and get the selected task
-     * 
-     * @param evt : mouse pressed event
-     * 
-     */
-    private void jTableTasksMousePressed(java.awt.event.MouseEvent evt) {
-        int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
-        this.task = tasksModel.getTasks().get(rowIndex);
-        task = tasksModel.getTasks().stream()
-                .filter((Task t) -> {
-                    return Integer.valueOf(t.getId()).equals(jTableTasks.getValueAt(rowIndex, 0));
-                })
-                .findFirst()
-                .orElse(null);
-    }
-
-    /**
      * Intercept the mouse click on the JTable column and call
      * stopcellEditing method
      * 
@@ -648,11 +594,11 @@ public class MainScreen extends javax.swing.JFrame {
         int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
         int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
         switch (columnIndex) {
-            case 3 ->
-                jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
             case 4 ->
                 jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
             case 5 ->
+                jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
+            case 6 ->
                 jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
             default -> {
                 if (evt.getClickCount() == 2) {
@@ -819,7 +765,9 @@ public class MainScreen extends javax.swing.JFrame {
         checkBox.getCheckbox().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                task.setCompleted(checkBox.getCheckbox().isSelected());
+                int selectedTaskIndex = jTableTasks.convertRowIndexToModel(jTableTasks.getSelectedRow());
+                Task selectedTask = tasksModel.getTasks().get(selectedTaskIndex);
+                selectedTask.setCompleted(checkBox.getCheckbox().isSelected());
                 taskController.update(task);
                 loadTasks(project.getId());
             }
@@ -829,7 +777,9 @@ public class MainScreen extends javax.swing.JFrame {
         edit.getCheckbox().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                TaskDialogScreen taskDialogScreen = new TaskDialogScreen(null, rootPaneCheckingEnabled, task);
+                int selectedTaskIndex = jTableTasks.convertRowIndexToModel(jTableTasks.getSelectedRow());
+                Task selectedTask = tasksModel.getTasks().get(selectedTaskIndex);
+                TaskDialogScreen taskDialogScreen = new TaskDialogScreen(null, rootPaneCheckingEnabled, selectedTask);
                 taskDialogScreen.setProject(project);
                 taskDialogScreen.setVisible(true);
                 taskDialogScreen.addWindowListener(new WindowAdapter() {
@@ -838,7 +788,6 @@ public class MainScreen extends javax.swing.JFrame {
                         loadTasks(project.getId());
                     }
                 });
-                loadTasks(project.getId());
             }
         });
 
@@ -846,8 +795,11 @@ public class MainScreen extends javax.swing.JFrame {
         delete.getCheckbox().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                taskController.removeById(task.getId());
-                tasksModel.getTasks().remove(task);
+                int selectedTaskIndex = jTableTasks.convertRowIndexToModel(jTableTasks.getSelectedRow());
+                Task selectedTask = tasksModel.getTasks().get(selectedTaskIndex);
+                taskController.removeById(selectedTask.getId());
+                tasksModel.getTasks().remove(selectedTask);
+                tasksModel.fireTableRowsDeleted(selectedTaskIndex, selectedTaskIndex);
                 loadTasks(project.getId());
             }
         });
