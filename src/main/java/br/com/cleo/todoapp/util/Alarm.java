@@ -26,6 +26,11 @@ public class Alarm {
         init();
     }
 
+    /**
+     * Initializes the alarm.
+     * reads the alarm.wav file from the classpath
+     * and create a clip and play the file.
+     */
     private void init() {
         InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("Alarm.wav");
         try {
@@ -38,11 +43,17 @@ public class Alarm {
         }
     }
 
+    /**
+     * Play alarm sound
+     */
     public void play() {
         clip.setMicrosecondPosition(0);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    /**
+     * Stop alarm sound
+     */
     public void stop() {
         clip.stop();
         clip.setFramePosition(0);

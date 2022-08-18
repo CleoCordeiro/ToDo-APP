@@ -25,6 +25,8 @@ import java.util.logging.Logger;
 public class TaskController {
 
     /**
+     * Save a task in the database
+     * 
      * @param task Receive a task and save in the database
      * @return Task object with the id of the task saved in the database
      */
@@ -61,6 +63,8 @@ public class TaskController {
     }
 
     /**
+     * Update a task in the database
+     * 
      * @param task Receive a task and update in the database
      * @return Task object updated in the database
      */
@@ -95,6 +99,8 @@ public class TaskController {
     }
 
     /**
+     * Delete a task in the database
+     * 
      * @param id Receive the id of the task and delete in the database
      * @return boolean true if the task was deleted successfully
      */
@@ -117,8 +123,10 @@ public class TaskController {
     }
 
     /**
+     * Get all tasks from the database filtered by project id
+     * 
      * @param projectId Receive the id of the project and return all tasks of
-     * the project
+     *                  the project
      * @return List of tasks of the project
      */
     public List<Task> getAll(int projectId) {
@@ -152,6 +160,8 @@ public class TaskController {
     }
 
     /**
+     * Get the task from the database filtered by id
+     * 
      * @param id Receive the id of the task and return the task
      * @return Task object
      */
@@ -185,8 +195,10 @@ public class TaskController {
     }
 
     /**
+     * Get the task from the database filtered by name
+     * 
      * @param name
-     * @return List of tasks of the project
+     * @return Task object
      */
     public Task findByName(String name) {
         Connection conn = ConnectionFactory.getConnection();

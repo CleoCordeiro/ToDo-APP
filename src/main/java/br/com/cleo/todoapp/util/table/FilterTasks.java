@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
 /**
- *
+ * Enum to filter the tasks.
+ * Get predicates to filter the tasks.
  * @author Cleo
  */
 public enum FilterTasks {
@@ -23,6 +24,10 @@ public enum FilterTasks {
         this.filter = filter;
     }
 
+
+    /**
+     * @return predicate to filter the tasks
+     */
     public Predicate<? super Task> getFilter() {
         return filter;
     }

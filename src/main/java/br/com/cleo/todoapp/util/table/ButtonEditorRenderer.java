@@ -16,7 +16,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 /**
- *
+ * Custom cell editor and renderer for the table.
  * @author Cleo
  */
 public class ButtonEditorRenderer extends AbstractCellEditor
@@ -39,6 +39,11 @@ public class ButtonEditorRenderer extends AbstractCellEditor
 
     }
 
+
+    /**
+     * 
+     * @param icon the icon to set to the button.
+     */
     public ButtonEditorRenderer(String icon) {
         this.icon = icon;
     }

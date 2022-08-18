@@ -24,6 +24,8 @@ import java.util.logging.Logger;
 public class ProjectController {
 
     /**
+     * Save a project in the database
+     * 
      * @param project Receive a project and save in the database
      * @return Project object with the id of the project saved in the database
      */
@@ -48,6 +50,12 @@ public class ProjectController {
         }
     }
 
+    /**
+     * Update a project in the database
+     * 
+     * @param project Receive a project and update in the database
+     * @return Project object with the id of the project updated in the database
+     */
     public Project update(Project project) {
         Connection conn = ConnectionFactory.getConnection();
         String sql = "UPDATE projects SET name = ?, description = ?, updatedAt = ? WHERE id = ?";
@@ -61,7 +69,7 @@ public class ProjectController {
             stmt.setInt(4, project.getId());
             int executeUpdate = stmt.executeUpdate();
             Logger.getLogger(TaskController.class.getName()).log(Level.INFO,
-                    executeUpdate > 0 ? "Task updated successfully" : "Task update failed" );            
+                    executeUpdate > 0 ? "Task updated successfully" : "Task update failed");
             return project;
         } catch (SQLException ex) {
             Logger.getLogger(TaskController.class.getName()).log(Level.SEVERE, "Unable to update project", ex);
@@ -72,6 +80,12 @@ public class ProjectController {
         return null;
     }
 
+    /**
+     * Delete a project in the database
+     * 
+     * @param id Receive the id of the project to be deleted
+     * @return true if the project was deleted successfully
+     */
     public boolean removeById(int id) {
         Connection conn = ConnectionFactory.getConnection();
         String sql = "DELETE FROM projects WHERE id = ?";
@@ -89,6 +103,12 @@ public class ProjectController {
         return false;
     }
 
+    /**
+     * Find a project by id in the database
+     * 
+     * @param id Receive the id of the project to be found
+     * @return Project object with the id of the project found in the database
+     */
     public Project findById(int id) {
         Connection conn = ConnectionFactory.getConnection();
         String sql = "SELECT * FROM projects WHERE id = ?";
@@ -115,6 +135,12 @@ public class ProjectController {
         return null;
     }
 
+    /**
+     * Find projects by name in the database
+     * 
+     * @param name Receive the name of the project to be found
+     * @return Project object with the id of the project found in the database
+     */
     public Project findByName(String name) {
         Connection conn = ConnectionFactory.getConnection();
         String sql = "SELECT * FROM projects WHERE name = ?";
@@ -142,6 +168,11 @@ public class ProjectController {
         return null;
     }
 
+    /**
+     * Find all projects in the database
+     * 
+     * @return List of projects found in the database
+     */
     public List<Project> getAll() {
         Connection conn = ConnectionFactory.getConnection();
         String sql = "SELECT * FROM projects";

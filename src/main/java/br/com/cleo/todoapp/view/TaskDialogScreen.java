@@ -28,19 +28,29 @@ public class TaskDialogScreen extends javax.swing.JDialog {
 
     /**
      * Creates new form ProjectDialogScreen
-     *
+     * Save Task
+     * 
      * @param parent the parent frame
-     * @param modal whether the dialog is modal
+     * @param modal  whether the dialog is modal
      */
     public TaskDialogScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         taskDAO = new TaskController();
+        task = new Task();
         hideErrorLabels();
         this.save = true;
     }
 
+    /**
+     * Creates new form ProjectDialogScreen
+     * Update Task
+     * 
+     * @param parent the parent frame
+     * @param modal  whether the dialog is modal
+     * @param task   the task to be updated
+     */
     public TaskDialogScreen(java.awt.Frame parent, boolean modal, Task task) {
         super(parent, modal);
         initComponents();
@@ -52,6 +62,15 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         setFields();
     }
 
+    /**
+     * Creates new form ProjectDialogScreen
+     * View Task
+     * 
+     * @param parent   the parent frame
+     * @param modal    whether the dialog is modal
+     * @param task     the task to be viewed
+     * @param viewOnly whether the dialog is view only
+     */
     public TaskDialogScreen(java.awt.Frame parent, boolean modal, Task task, Boolean viewOnly) {
         super(parent, modal);
         initComponents();
@@ -64,12 +83,18 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         disableFields();
     }
 
+    /**
+     * Set fields with the task view or update constructor
+     */
     private void setFields() {
         jTextFieldName.setText(this.task.getName());
         jTextAreaDescription.setText(this.task.getDescription());
         dateTimePickerDeadLine.setDateTimeStrict(task.getDeadline());
     }
 
+    /**
+     * Disable editing fields with the view constructor
+     */
     private void disableFields() {
         jTextFieldName.setEditable(false);
         jTextAreaDescription.setEditable(false);
@@ -84,7 +109,8 @@ public class TaskDialogScreen extends javax.swing.JDialog {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanelToolBar = new javax.swing.JPanel();
@@ -124,23 +150,27 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         javax.swing.GroupLayout jPanelToolBarLayout = new javax.swing.GroupLayout(jPanelToolBar);
         jPanelToolBar.setLayout(jPanelToolBarLayout);
         jPanelToolBarLayout.setHorizontalGroup(
-            jPanelToolBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelToolBarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelIco, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                jPanelToolBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelToolBarLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelIco, javax.swing.GroupLayout.PREFERRED_SIZE, 54,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
         jPanelToolBarLayout.setVerticalGroup(
-            jPanelToolBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelToolBarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelToolBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelIco, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+                jPanelToolBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                jPanelToolBarLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(jPanelToolBarLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabelIco, javax.swing.GroupLayout.DEFAULT_SIZE, 48,
+                                                        Short.MAX_VALUE))
+                                        .addContainerGap()));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -191,43 +221,52 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTextFieldName)
-            .addComponent(jLabelDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPaneDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-            .addComponent(jLabelDeadLine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabelErrorName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabelErrorDeadline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabelErrorDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(dateTimePickerDeadLine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabelName, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldName)
+                        .addComponent(jLabelDescription, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPaneDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 437,
+                                Short.MAX_VALUE)
+                        .addComponent(jLabelDeadLine, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelErrorName, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelErrorDeadline, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelErrorDescription, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(dateTimePickerDeadLine, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()));
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelErrorName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelDescription)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelErrorDescription)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelDeadLine)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelErrorDeadline)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateTimePickerDeadLine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabelName)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelErrorName)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelDescription)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelErrorDescription)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPaneDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 130,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelDeadLine)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelErrorDeadline)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dateTimePickerDeadLine, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
 
         JPanelBanner.setBackground(new java.awt.Color(29, 150, 135));
 
@@ -237,56 +276,67 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         javax.swing.GroupLayout JPanelBannerLayout = new javax.swing.GroupLayout(JPanelBanner);
         JPanelBanner.setLayout(JPanelBannerLayout);
         JPanelBannerLayout.setHorizontalGroup(
-            JPanelBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                JPanelBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         JPanelBannerLayout.setVerticalGroup(
-            JPanelBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                JPanelBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(JPanelBanner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanelToolBar, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(JPanelBanner, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap()));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JPanelBanner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanelToolBar, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JPanelBanner, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabelIcoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelIcoMousePressed
+    /**
+     * Listener for the button
+     * 
+     * @param evt : Mouse pressed event
+     */
+    private void jLabelIcoMousePressed(java.awt.event.MouseEvent evt) {
         SaveOrUpdate();
-    }//GEN-LAST:event_jLabelIcoMousePressed
+    }
 
+    /**
+     * Save or update the task
+     */
     private void SaveOrUpdate() {
         if (validateFields()) {
 
             try {
+                task.setName(jTextFieldName.getText());
+                task.setDescription(jTextAreaDescription.getText());
+                task.setDeadline(dateTimePickerDeadLine.getDateTimeStrict());
                 if (save) {
-                    Task newTask = new Task();
-                    newTask.setName(jTextFieldName.getText());
-                    newTask.setDescription(jTextAreaDescription.getText());
-                    newTask.setDeadline(dateTimePickerDeadLine.getDateTimeStrict());
-                    newTask.setCompleted(false);
-                    newTask.setProjectId(project.getId());
-                    taskDAO.save(newTask);
+                    task.setCompleted(false);
+                    task.setProjectId(project.getId());
+                    taskDAO.save(task);
                     JOptionPane.showMessageDialog(rootPane, "Tarefa salva com sucesso", "Success",
                             JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -305,25 +355,41 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         }
     }
 
-    private void jTextFieldNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNameKeyPressed
+    /**
+     * Listener Enter key pressed
+     * 
+     * @param evt : Event Enter pressed
+     */
+    private void jTextFieldNameKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_jTextFieldNameKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             SaveOrUpdate();
         }
-    }//GEN-LAST:event_jTextFieldNameKeyPressed
+    }
 
-    private void jTextAreaDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaDescriptionKeyReleased
+    /**
+     * Listener Enter key pressed
+     * 
+     * @param evt : Event Enter pressed
+     */
+    private void jTextAreaDescriptionKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_jTextAreaDescriptionKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             SaveOrUpdate();
         }
-    }//GEN-LAST:event_jTextAreaDescriptionKeyReleased
+    }
 
-    private void dateTimePickerDeadLineKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dateTimePickerDeadLineKeyPressed
+    /**
+     * Listener Enter key pressed
+     * 
+     * @param evt : Event Enter pressed
+     */
+    private void dateTimePickerDeadLineKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_dateTimePickerDeadLineKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             SaveOrUpdate();
         }
-    }//GEN-LAST:event_dateTimePickerDeadLineKeyPressed
+    }
 
-    private void panelConfig(JScrollPane jScrollPaneDescription, JTextArea jTextAreaDescription, JLabel jLabelErrorName) {
+    private void panelConfig(JScrollPane jScrollPaneDescription, JTextArea jTextAreaDescription,
+            JLabel jLabelErrorName) {
         jTextAreaDescription.setColumns(20);
         jTextAreaDescription.setFont(new Font("Segoe UI", PLAIN, 14)); // NOI18N
         jTextAreaDescription.setRows(5);
@@ -340,20 +406,20 @@ public class TaskDialogScreen extends javax.swing.JDialog {
                 jPanelToolBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(jPanelToolBarLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabelTitle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelTitle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabelIco, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-        );
+                                .addContainerGap()));
         jPanelToolBarLayout.setVerticalGroup(
                 jPanelToolBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(GroupLayout.Alignment.TRAILING, jPanelToolBarLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanelToolBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabelTitle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabelTitle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
                                         .addComponent(jLabelIco, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
-                                .addContainerGap())
-        );
+                                .addContainerGap()));
 
         jPanel2.setBackground(new Color(255, 255, 255));
     }
@@ -362,9 +428,10 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         // TODO add your handling code here:
     }// GEN-LAST:event_jFormattedTextFieldDeadLineActionPerformed
 
-//    private void jLabelIcoMousePressed() {// GEN-FIRST:event_jLabelIcoMousePressed
-//
-//    }
+    // private void jLabelIcoMousePressed() {//
+    // GEN-FIRST:event_jLabelIcoMousePressed
+    //
+    // }
     /**
      * @param args the command line arguments
      */

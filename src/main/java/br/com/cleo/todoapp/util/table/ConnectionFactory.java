@@ -46,26 +46,10 @@ public class ConnectionFactory {
     }
 
     /**
-     * Get a connection to the database
-     *
-     * @return Connection object
-     */
-//    public static Connection getConnection() {
-//        try {
-//            Class.forName(DRIVER);
-//            return DriverManager.getConnection(URL, USER, PASSWORD);
-//        } catch (SQLException | ClassNotFoundException ex) {
-//            Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE,
-//                    "Database connection error", ex);
-//            return null;
-//        }
-//    }
-    /**
      *
      * Receive a connection and close it
      *
-     * @param con
-     *
+     * @param con : Connection to be closed
      */
     public static void closeConnection(Connection con) {
         if (con != null) {
@@ -80,9 +64,8 @@ public class ConnectionFactory {
     /**
      * Receive a connection and a prepared statement and close it
      *
-     * @param conn
-     * @param stmt
-     *
+     * @param conn : Connection to the database
+     * @param stmt : PreparedStatement to the database
      */
     public static void closeConnection(Connection conn, PreparedStatement stmt) {
         closeConnection(conn);
@@ -101,10 +84,9 @@ public class ConnectionFactory {
      * Receive a connection, a prepared statement and a result set and close
      * them
      *
-     * @param conn
-     * @param stmt
-     * @param rs
-     *
+     * @param conn : Connection to the database
+     * @param stmt : PreparedStatement to the database
+     * @param rs   : ResultSet to the database
      */
     public static void closeConnection(Connection conn, PreparedStatement stmt, ResultSet rs) {
         closeConnection(conn, stmt);
