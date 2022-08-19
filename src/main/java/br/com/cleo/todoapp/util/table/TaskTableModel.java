@@ -1,15 +1,18 @@
 package br.com.cleo.todoapp.util.table;
 
-import br.com.cleo.todoapp.model.Task;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
+
+import br.com.cleo.todoapp.model.Task;
 
 public class TaskTableModel extends AbstractTableModel {
 
     private final String[] columns = { "id", "Name", "Description", "Prazo", "Tarefa Concluida", "Editar", "Excluir" };
     private List<Task> tasks = new ArrayList<>();
+
 
     @Override
     public int getColumnCount() {

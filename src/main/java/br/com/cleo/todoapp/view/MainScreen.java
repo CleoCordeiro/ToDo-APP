@@ -2,10 +2,16 @@ package br.com.cleo.todoapp.view;
 
 import static br.com.cleo.todoapp.util.CreateDB.createDB;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.MenuItem;
 import java.awt.Point;
+import java.awt.PopupMenu;
 import java.awt.Rectangle;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,6 +31,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -67,7 +74,38 @@ public class MainScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         initCustomComponents();
+        if (SystemTray.isSupported()) {
+            initSystemTray();
+        }
+    }
 
+    private void initSystemTray() {
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        SystemTray systemTray = SystemTray.getSystemTray();
+        Image icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png")).getImage();
+
+        PopupMenu trayMenu = new PopupMenu();
+        MenuItem show = new MenuItem("Show");
+        show.addActionListener((
+                ActionEvent e) -> {
+            setVisible(true);
+        });
+        MenuItem exit = new MenuItem("Exit");
+        exit.addActionListener((
+                ActionEvent e) -> {
+            System.exit(0);
+        });
+        trayMenu.add(show);
+        trayMenu.add(exit);
+
+        final TrayIcon trayIcon = new TrayIcon(icon, "ToDo APP v1.0", trayMenu);
+
+        try {
+            systemTray.add(trayIcon);
+        } catch (AWTException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 
     /**
@@ -599,29 +637,22 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     /**
-     * Intercept the mouse click on the JTable column get the selected task and
-     * check if 2 clicks open task details
+     * Intercept the mouse click on the JTable column get the selected task
+     * and change default color editing cell
      * 
      * @param evt : the mouse click event
      * 
      */
     private void jTableTasksMousePressed(java.awt.event.MouseEvent evt) {
+
         int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
         int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
-        task = tasksModel.getTasks().get(rowIndex);
+        Object valueAt = jTableTasks.getValueAt(rowIndex, 0);
 
-    }
-
-    /**
-     * Intercept the mouse click on the JTable column and call
-     * stopcellEditing method
-     * 
-     * @param evt : the mouse click event
-     * 
-     */
-    private void jTableTasksMouseReleased(java.awt.event.MouseEvent evt) {
-        int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
-        int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
+        task = tasksModel.getTasks().stream().filter(t -> Integer.valueOf(t.getId()).equals(valueAt)).findFirst()
+                .orElse(null);
+        jTableTasks.prepareEditor(jTableTasks.getCellEditor(), rowIndex, columnIndex)
+                .setBackground(jTableTasks.getSelectionBackground());
 
     }
 
@@ -760,15 +791,14 @@ public class MainScreen extends javax.swing.JFrame {
             public void mouseReleased(MouseEvent e) {
                 JTable t = (JTable) e.getComponent();
                 Point pt = e.getPoint();
-                int rowIndex = t.rowAtPoint(pt), columnIndex = t.columnAtPoint(pt);
-
+                int columnIndex = t.columnAtPoint(pt);
                 switch (t.convertColumnIndexToModel(columnIndex)) {
                     case 4 ->
-                        jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
+                        jTableTasks.getCellEditor().stopCellEditing();
                     case 5 ->
-                        jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
+                        jTableTasks.getCellEditor().stopCellEditing();
                     case 6 ->
-                        jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
+                        jTableTasks.getCellEditor().stopCellEditing();
                     default -> {
                         if (e.getClickCount() == 2) {
                             TaskDialogScreen taskDialogScreen = new TaskDialogScreen(MainScreen.this,
@@ -810,6 +840,8 @@ public class MainScreen extends javax.swing.JFrame {
         checkBox.getCheckbox().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
+                // int selectedIndex = jListProjects.locationToIndex(evt.getPoint());
+                // jListProjects.setSelectedIndex(selectedIndex);
                 task.setCompleted(checkBox.getCheckbox().isSelected());
                 taskController.update(task);
                 loadTasks(project.getId());
@@ -856,15 +888,14 @@ public class MainScreen extends javax.swing.JFrame {
     private void initTableSort() {
         jTableTasks.setAutoCreateRowSorter(true);
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(jTableTasks.getModel());
-        sorter.setComparator(2, (String o1, String o2) -> {
+        sorter.setComparator(3, (String o1, String o2) -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/y");
             LocalDateTime ldt1, ldt2;
             ldt1 = LocalDateTime.parse(o1, formatter);
             ldt2 = LocalDateTime.parse(o2, formatter);
             return ldt1.compareTo(ldt2);
         });
-
-        jTableTasks.setRowSorter(sorter);
+        tasksModel.fireTableDataChanged();
     }
 
     /**

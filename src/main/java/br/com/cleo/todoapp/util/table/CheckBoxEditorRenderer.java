@@ -62,4 +62,5 @@ public class CheckBoxEditorRenderer extends AbstractCellEditor
         return editor.button;
     }
 
+    
 }

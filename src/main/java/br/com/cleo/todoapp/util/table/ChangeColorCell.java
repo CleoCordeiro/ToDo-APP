@@ -13,8 +13,9 @@ public class ChangeColorCell {
 
     public static Component ChangeColor(JTable table, int row, Component component) {
         TaskTableModel taskTableModel = (TaskTableModel) table.getModel();
-        LocalDateTime deadline = taskTableModel.getTasks().get(row).getDeadline();
-        boolean completed = taskTableModel.getTasks().get(row).isCompleted();
+        int rowIndex = table.convertRowIndexToModel(row);
+        LocalDateTime deadline = taskTableModel.getTasks().get(rowIndex).getDeadline();
+        boolean completed = taskTableModel.getTasks().get(rowIndex).isCompleted();
 
         if (!completed) {
             LocalDateTime now = LocalDateTime.now();
@@ -30,8 +31,9 @@ public class ChangeColorCell {
 
     public static void ChangeColor(JTable table, int row, Component component, boolean isSelected) {
         TaskTableModel taskTableModel = (TaskTableModel) table.getModel();
-        LocalDateTime deadline = taskTableModel.getTasks().get(row).getDeadline();
-        boolean completed = taskTableModel.getTasks().get(row).isCompleted();
+        int rowIndex = table.convertRowIndexToModel(row);
+        LocalDateTime deadline = taskTableModel.getTasks().get(rowIndex).getDeadline();
+        boolean completed = taskTableModel.getTasks().get(rowIndex).isCompleted();
 
         if (isSelected) {
             component.setBackground(table.getSelectionBackground());
