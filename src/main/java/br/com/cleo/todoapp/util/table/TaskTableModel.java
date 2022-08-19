@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class TaskTableModel extends AbstractTableModel {
 
-    private final String[] columns = {"id", "Name", "Description", "Prazo", "Tarefa Concluida", "Editar", "Excluir"};
+    private final String[] columns = { "id", "Name", "Description", "Prazo", "Tarefa Concluida", "Editar", "Excluir" };
     private List<Task> tasks = new ArrayList<>();
 
     @Override
@@ -29,7 +29,7 @@ public class TaskTableModel extends AbstractTableModel {
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
 
-        return List.of(4, 5,6).contains(columnIndex);
+        return List.of(4, 5, 6).contains(columnIndex);
     }
 
     @Override

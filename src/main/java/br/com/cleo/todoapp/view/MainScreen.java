@@ -4,6 +4,7 @@ import static br.com.cleo.todoapp.util.CreateDB.createDB;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -18,10 +19,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.plaf.DimensionUIResource;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -80,6 +84,8 @@ public class MainScreen extends javax.swing.JFrame {
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource("lists.png"));
+        setIconImage(img.getImage());
         jPopupMenuProjects = new javax.swing.JPopupMenu();
         buttonGroupFilter = new javax.swing.ButtonGroup();
         jPanelToolBar = new javax.swing.JPanel();
@@ -294,6 +300,9 @@ public class MainScreen extends javax.swing.JFrame {
         });
         jListProjects.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListProjects.setFixedCellHeight(40);
+
+        jScrollPaneProjects.setMinimumSize(new DimensionUIResource(257, 364));
+        jScrollPaneProjects.setMaximumSize(new DimensionUIResource(257, 364));
         jListProjects.setSelectionBackground(new java.awt.Color(0, 153, 102));
         jListProjects.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -324,7 +333,11 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.setShowHorizontalLines(true);
         jTableTasks.setShowVerticalLines(true);
         jTableTasks.getTableHeader().setReorderingAllowed(false);
-
+        jTableTasks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTableTasksMousePressed(evt);
+            }
+        });
         jScrollPaneTasks.setViewportView(jTableTasks);
 
         jPanelTasksList.add(jScrollPaneTasks, java.awt.BorderLayout.CENTER);
@@ -517,7 +530,9 @@ public class MainScreen extends javax.swing.JFrame {
      * 
      */
     private void jListProjectsMousePressed(java.awt.event.MouseEvent evt) {
-        int selectedIndex = jListProjects.getSelectedIndex();
+        int selectedIndex = jListProjects.locationToIndex(evt.getPoint());
+        jListProjects.setSelectedIndex(selectedIndex);
+
         if (selectedIndex != -1) {
             loadTasksSelectedProject(selectedIndex);
             Rectangle cellBounds = jListProjects.getCellBounds(selectedIndex, selectedIndex);
@@ -584,6 +599,20 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     /**
+     * Intercept the mouse click on the JTable column get the selected task and
+     * check if 2 clicks open task details
+     * 
+     * @param evt : the mouse click event
+     * 
+     */
+    private void jTableTasksMousePressed(java.awt.event.MouseEvent evt) {
+        int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
+        int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
+        task = tasksModel.getTasks().get(rowIndex);
+
+    }
+
+    /**
      * Intercept the mouse click on the JTable column and call
      * stopcellEditing method
      * 
@@ -593,21 +622,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void jTableTasksMouseReleased(java.awt.event.MouseEvent evt) {
         int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
         int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
-        switch (columnIndex) {
-            case 4 ->
-                jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
-            case 5 ->
-                jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
-            case 6 ->
-                jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
-            default -> {
-                if (evt.getClickCount() == 2) {
-                    TaskDialogScreen taskDialogScreen = new TaskDialogScreen(this, rootPaneCheckingEnabled, task, true);
-                    taskDialogScreen.setVisible(true);
-                    taskDialogScreen.dispose();
-                }
-            }
-        }
+
     }
 
     /**
@@ -735,6 +750,36 @@ public class MainScreen extends javax.swing.JFrame {
      * initialize custom components
      */
     private void initCustomComponents() {
+        jTableTasks.addMouseListener(new MouseAdapter() {
+            /*
+             * (non-Javadoc)
+             * 
+             * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
+             */
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                JTable t = (JTable) e.getComponent();
+                Point pt = e.getPoint();
+                int rowIndex = t.rowAtPoint(pt), columnIndex = t.columnAtPoint(pt);
+
+                switch (t.convertColumnIndexToModel(columnIndex)) {
+                    case 4 ->
+                        jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
+                    case 5 ->
+                        jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
+                    case 6 ->
+                        jTableTasks.getCellEditor(rowIndex, columnIndex).stopCellEditing();
+                    default -> {
+                        if (e.getClickCount() == 2) {
+                            TaskDialogScreen taskDialogScreen = new TaskDialogScreen(MainScreen.this,
+                                    rootPaneCheckingEnabled, task, true);
+                            taskDialogScreen.setVisible(true);
+                            taskDialogScreen.dispose();
+                        }
+                    }
+                }
+            }
+        });
         jRadioButtonAll.setActionCommand("ALL");
         jRadioButtonCompleted.setActionCommand("COMPLETED");
         jRadioButtonNotCompleted.setActionCommand("NOTCOMPLETED");
@@ -765,9 +810,7 @@ public class MainScreen extends javax.swing.JFrame {
         checkBox.getCheckbox().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                int selectedTaskIndex = jTableTasks.convertRowIndexToModel(jTableTasks.getSelectedRow());
-                Task selectedTask = tasksModel.getTasks().get(selectedTaskIndex);
-                selectedTask.setCompleted(checkBox.getCheckbox().isSelected());
+                task.setCompleted(checkBox.getCheckbox().isSelected());
                 taskController.update(task);
                 loadTasks(project.getId());
             }
@@ -777,9 +820,7 @@ public class MainScreen extends javax.swing.JFrame {
         edit.getCheckbox().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                int selectedTaskIndex = jTableTasks.convertRowIndexToModel(jTableTasks.getSelectedRow());
-                Task selectedTask = tasksModel.getTasks().get(selectedTaskIndex);
-                TaskDialogScreen taskDialogScreen = new TaskDialogScreen(null, rootPaneCheckingEnabled, selectedTask);
+                TaskDialogScreen taskDialogScreen = new TaskDialogScreen(null, rootPaneCheckingEnabled, task);
                 taskDialogScreen.setProject(project);
                 taskDialogScreen.setVisible(true);
                 taskDialogScreen.addWindowListener(new WindowAdapter() {
@@ -795,12 +836,16 @@ public class MainScreen extends javax.swing.JFrame {
         delete.getCheckbox().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                int selectedTaskIndex = jTableTasks.convertRowIndexToModel(jTableTasks.getSelectedRow());
-                Task selectedTask = tasksModel.getTasks().get(selectedTaskIndex);
-                taskController.removeById(selectedTask.getId());
-                tasksModel.getTasks().remove(selectedTask);
-                tasksModel.fireTableRowsDeleted(selectedTaskIndex, selectedTaskIndex);
-                loadTasks(project.getId());
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a tarefa?",
+                        "Excluir tarefa", JOptionPane.YES_NO_OPTION);
+                if (showConfirmDialog == JOptionPane.YES_OPTION) {
+                    int selectedTaskIndex = jTableTasks.convertRowIndexToModel(jTableTasks.getSelectedRow());
+                    taskController.removeById(task.getId());
+                    tasksModel.getTasks().remove(task);
+                    tasksModel.fireTableRowsDeleted(selectedTaskIndex, selectedTaskIndex);
+                    loadTasks(project.getId());
+                }
+
             }
         });
     }
@@ -879,6 +924,12 @@ public class MainScreen extends javax.swing.JFrame {
      */
     private void initPopUpMenu() {
         jPopupMenu = new JPopupMenu();
+        jPopupMenu.add("Visualizar Projeto").addActionListener((ActionEvent e) -> {
+            ProjectDialogScreen projectDialogScreen = new ProjectDialogScreen(this, rootPaneCheckingEnabled, project,
+                    true);
+            projectDialogScreen.setVisible(true);
+        });
+
         jPopupMenu.add("Editar Projeto").addActionListener((ActionEvent e) -> {
             ProjectDialogScreen projectDialogScreen = new ProjectDialogScreen(this, rootPaneCheckingEnabled, project);
             projectDialogScreen.setVisible(true);
@@ -892,7 +943,17 @@ public class MainScreen extends javax.swing.JFrame {
         });
 
         jPopupMenu.add("Excluir Projeto").addActionListener((ActionEvent e) -> {
-            projectController.removeById(project.getId());
+            try {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o projeto?",
+                        "Excluir projeto", JOptionPane.YES_NO_OPTION);
+                if (showConfirmDialog == JOptionPane.YES_OPTION) {
+                    projectController.removeById(project.getId());
+                }
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(this,
+                        "Não é possível excluir o projeto pois ele possui tarefas associadas.\nExclua as tarefas antes de excluir o projeto",
+                        "Erro ao excluir projeto", JOptionPane.ERROR_MESSAGE);
+            }
             loadProjects();
             loadTasks(project.getId());
         });

@@ -2,6 +2,7 @@ package br.com.cleo.todoapp.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
@@ -28,7 +29,7 @@ public class Alarm {
      * and create a clip and play the file.
      */
     private void init() {
-        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("Alarm.wav");
+        URL resourceAsStream = getClass().getClassLoader().getSystemResource("Alarm.wav");
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(resourceAsStream);
             clip = AudioSystem.getClip();

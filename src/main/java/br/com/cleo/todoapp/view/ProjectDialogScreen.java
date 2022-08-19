@@ -52,6 +52,34 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
     }
 
     /**
+     * Constructor from view
+     * 
+     * @param parent
+     * @param modal
+     * @param project : project to view
+     */
+    public ProjectDialogScreen(java.awt.Frame parent, boolean modal, Project project, Boolean viewOnly) {
+        super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.project = project;
+        projectDAO = new ProjectController();
+        hideErrorFields();
+        save = false;
+        setFields();
+        disableFields();
+    }
+
+    /**
+     * Disable editing fields with the view constructor
+     */
+    private void disableFields() {
+        jTextFieldProjectName.setEditable(false);
+        jTextAreaProjectDescription.setEditable(false);
+        jLabelIco.setVisible(false);
+    }
+
+    /**
      * This method set the fields of the form if construct from update
      */
     private void setFields() {

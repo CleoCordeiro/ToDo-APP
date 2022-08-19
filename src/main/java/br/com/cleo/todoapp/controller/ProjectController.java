@@ -81,8 +81,9 @@ public class ProjectController {
      * 
      * @param id Receive the id of the project to be deleted
      * @return true if the project was deleted successfully
+     * @throws Exception
      */
-    public boolean removeById(int id) {
+    public boolean removeById(int id) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         String sql = "DELETE FROM projects WHERE id = ?";
         PreparedStatement stmt = null;
@@ -92,11 +93,10 @@ public class ProjectController {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(TaskController.class.getName()).log(Level.SEVERE, "Unable to remove project", ex);
+            throw new Exception("Unable to delete project", ex);
         } finally {
             ConnectionFactory.closeConnection(conn, stmt);
         }
-        return false;
     }
 
     /**

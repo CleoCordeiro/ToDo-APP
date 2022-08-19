@@ -93,9 +93,7 @@ public class CreateDB {
                        projects_id INT NOT NULL,
                        CONSTRAINT fk_tasks_projects
                        FOREIGN KEY (projects_id)
-                       REFERENCES projects (id)
-                       ON DELETE CASCADE
-                       ON UPDATE CASCADE);
+                       REFERENCES projects (id));
                     """;
 
             stmt = conn.prepareStatement(sql);
