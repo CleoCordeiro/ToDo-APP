@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.cleo.todoapp</groupId>
     <artifactId>TodoApp</artifactId>
@@ -8,13 +9,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <exec.mainClass>br.com.cleo.todoapp.TodoApp</exec.mainClass>
-        
+        <exec.mainClass>br.com.cleo.todoapp.view.MainScreen</exec.mainClass>
     </properties>
 
 
     <dependencies>
-        
+
         <!-- https://mvnrepository.com/artifact/com.github.lgooddatepicker/LGoodDatePicker -->
         <dependency>
             <groupId>com.github.lgooddatepicker</groupId>
@@ -60,7 +60,7 @@
         </dependency>
     </dependencies>
     <build>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+        <pluginManagement>            <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
                 <plugin>
@@ -100,6 +100,32 @@
                 <plugin>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>3.0.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                        <finalName>ToDoApp</finalName>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <archive>
+                            <manifest>
+                                <mainClass>br.com.cleo.todoapp.view.MainScreen</mainClass>
+                                <addClasspath>true</addClasspath>
+                                <classpathPrefix>conf/</classpathPrefix>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
