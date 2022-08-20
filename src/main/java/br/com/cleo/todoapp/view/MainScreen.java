@@ -2,13 +2,12 @@ package br.com.cleo.todoapp.view;
 
 import static br.com.cleo.todoapp.util.CreateDB.createDB;
 
+import java.awt.Cursor;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.MenuItem;
 import java.awt.Point;
-import java.awt.PopupMenu;
 import java.awt.Rectangle;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
@@ -17,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -31,7 +31,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.WindowConstants;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -80,32 +79,36 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     private void initSystemTray() {
-        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+
         SystemTray systemTray = SystemTray.getSystemTray();
-        Image icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png")).getImage();
+        Image icon = new ImageIcon(getClass().getClassLoader().getResource("lists.png")).getImage();
 
-        PopupMenu trayMenu = new PopupMenu();
-        MenuItem show = new MenuItem("Show");
-        show.addActionListener((
-                ActionEvent e) -> {
-            setVisible(true);
+        final TrayIcon trayIcon = new TrayIcon(icon, "ToDo APP v1.0");
+        trayIcon.setImageAutoSize(true);
+        trayIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    setVisible(true);
+                    setState(NORMAL);
+                }
+            }
         });
-        MenuItem exit = new MenuItem("Exit");
-        exit.addActionListener((
-                ActionEvent e) -> {
-            System.exit(0);
-        });
-        trayMenu.add(show);
-        trayMenu.add(exit);
-
-        final TrayIcon trayIcon = new TrayIcon(icon, "ToDo APP v1.0", trayMenu);
 
         try {
             systemTray.add(trayIcon);
         } catch (AWTException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+
+        addWindowStateListener(new WindowStateListener() {
+            public void windowStateChanged(WindowEvent e) {
+                if (e.getNewState() == ICONIFIED || e.getNewState() == Cursor.NE_RESIZE_CURSOR) {
+                    setVisible(false);
+                    requestFocus();
+                }
+            }
+        });
     }
 
     /**
