@@ -69,24 +69,26 @@ Manual de instalação no windows com adição de variável de ambiente: http://
 
 ## 📦 Executando o projeto
 - Primeira forma: Baixando o arquivo jar
-```bash
-Baixe a versão release do projeto no link abaixo:
 
-# Windows
-Pode ser executado clicando no arquivo TodoApp.jar
+  - 1° Baixe a versão release do projeto no link abaixo:
+https://github.com/CleoCordeiro/ToDo-APP/releases/download/1.0/ToDo-APP.jar
 
-# Linux
-Pode ser executado usando o terminal e executando o comando:
-jar -jar TodoApp.jar
-```
+  - 2° Execute o projeto:
+    - Windows
+  Pode ser executado clicando no arquivo TodoApp.jar
+
+    - Linux
+  Pode ser executado usando o terminal e executando o comando:
+  jar -jar TodoApp.jar
+
 - Segunda forma: Compilando o projeto
-```bash
-1° Faça o download ou clone do repositório do projeto.
-2° Abra o terminal no diretório do projeto.
-3° Execute o comando:  mvn compile assembly:single
 
-Seu arquivo jar será gerado na pasta target.
-```
+  - 1° Faça o download ou clone do repositório do projeto.
+  - 2° Abra o terminal no diretório do projeto.
+  - 3° Execute o comando:  mvn compile assembly:single
+
+  - 4° Seu arquivo jar será gerado na pasta target.
+
 
 ##
 ## 📓 Criação de projeto
