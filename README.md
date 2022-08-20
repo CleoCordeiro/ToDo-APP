@@ -154,6 +154,19 @@ https://github.com/CleoCordeiro/ToDo-APP/releases/download/1.0/ToDo-APP.jar
 
 ## ⏰ Demostração alarme de tarefa expirada
 ![Alarm](assets/12-%20Alarme.gif)
-
+<br>
+<br>
 ## 🙈 Esconder janela do ToDo-APP
 ![System Tray](assets/13-%20Minimize%20to%20tray.gif)
+<br>
+<br>
+<br>
+<br>
+
+# Autor
+Cléo Maia Cordeiro
+</br>
+
+[![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cleocordeiro/)
+[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/cleo.m.cordeiro/)
+[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/cleomaiacordeiro/)
