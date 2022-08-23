@@ -9,7 +9,7 @@
   - [✔️ Técnicas e tecnologias utilizadas](#️-técnicas-e-tecnologias-utilizadas)
   - [🧩 Dependências](#-dependências)
     - [💻 JVM](#-jvm)
-    - [⚙️ Maven (Opcional)](#-⚙️-Maven-(Opcional))
+    - [⚙️ Maven (Opcional)](#%EF%B8%8F-maven-opcional)
   - [📦 Executando o projeto](#-executando-o-projeto)
   - [📓 Criação de projeto](#-criação-de-projeto)
   - [📓👀 Visualização de projeto](#-visualização-de-projeto)
@@ -74,10 +74,10 @@ Manual de instalação no windows com adição de variável de ambiente: http://
 https://github.com/CleoCordeiro/ToDo-APP/releases/download/1.0/ToDo-APP.jar
 
   - 2° Execute o projeto:
-    - Windows
+    - (Windows)
   Pode ser executado clicando no arquivo TodoApp.jar
 
-    - Linux
+    - (Linux)
   Pode ser executado usando o terminal e executando o comando:
   jar -jar TodoApp.jar
 
